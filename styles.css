@@ -380,7 +380,7 @@ a:hover {
     position: relative;
     z-index: 2;
     text-align: center;
-    padding: var(--spacing-xl) var(--spacing-md);
+    padding: var(--spacing-xl) var(--spacing-md) calc(var(--spacing-xl) + 60px) var(--spacing-md);
 }
 
 .hero-title {
@@ -394,6 +394,17 @@ a:hover {
     -webkit-text-fill-color: transparent;
     background-clip: text;
     animation: fadeInUp 1s ease;
+}
+
+.hero-slogan {
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    font-weight: 700;
+    color: var(--color-yellow);
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin-bottom: var(--spacing-md);
+    animation: fadeInUp 1s ease 0.1s both;
+    text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
 }
 
 .hero-subtitle {
@@ -420,6 +431,8 @@ a:hover {
     gap: var(--spacing-md);
     justify-content: center;
     flex-wrap: wrap;
+    margin-bottom: var(--spacing-xl);
+    margin-top: var(--spacing-lg);
     animation: fadeInUp 1s ease 0.6s both;
 }
 
@@ -445,6 +458,7 @@ a:hover {
     transform: translateX(-50%);
     display: flex;
     flex-direction: column;
+    z-index: 10;
     align-items: center;
     gap: var(--spacing-xs);
     color: var(--color-gray);
@@ -704,6 +718,16 @@ a:hover {
     margin-bottom: var(--spacing-sm);
 }
 
+.page-slogan {
+    font-size: clamp(1.3rem, 2.5vw, 2rem);
+    font-weight: 700;
+    color: var(--color-yellow);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin: var(--spacing-sm) 0 var(--spacing-md) 0;
+    text-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+}
+
 .page-header p {
     color: var(--color-gray);
     font-size: 1.1rem;
@@ -716,6 +740,17 @@ a:hover {
     gap: var(--spacing-lg);
 }
 
+.mission-vision-grid .mv-card:nth-child(3),
+.mission-vision-grid .mv-card:nth-child(4) {
+    grid-column: span 1;
+}
+
+@media (min-width: 1024px) {
+    .mission-vision-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
 .mv-card {
     padding: var(--spacing-lg);
     background: linear-gradient(135deg, var(--color-dark-gray), var(--color-dark));
@@ -725,6 +760,26 @@ a:hover {
 .mv-card h2 {
     color: var(--color-red);
     margin-bottom: var(--spacing-md);
+}
+
+/* Legacy Image Card */
+.legacy-image-card {
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-dark);
+    min-height: 500px;
+}
+
+.legacy-image-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    padding: var(--spacing-md);
+    background: var(--color-dark-gray);
 }
 
 /* Values Section */
@@ -1418,6 +1473,16 @@ a:hover {
     font-size: 0.9rem;
 }
 
+.footer-slogan {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--color-yellow);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: var(--spacing-sm);
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+}
+
 .footer-bottom p {
     margin-bottom: var(--spacing-xs);
 }
@@ -1708,6 +1773,11 @@ a:hover {
         grid-template-columns: 1fr;
     }
 
+    .legacy-image-card {
+        min-height: 400px;
+        order: 4;
+    }
+
     .trainers-grid {
         grid-template-columns: 1fr;
     }
@@ -1835,6 +1905,12 @@ a:hover {
     .hero-features {
         flex-direction: column;
         align-items: center;
+        margin-bottom: var(--spacing-lg);
+        margin-top: var(--spacing-md);
+    }
+
+    .hero-content {
+        padding-bottom: calc(var(--spacing-lg) + 50px);
     }
 
     .feature-badge {
