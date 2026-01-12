@@ -1275,6 +1275,38 @@ a:hover {
     color: var(--color-light-gray);
 }
 
+/* Local SEO Section */
+.local-seo {
+    padding: var(--spacing-xl) 0;
+}
+
+.local-content {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.local-content p {
+    margin-bottom: var(--spacing-md);
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: var(--color-light-gray);
+}
+
+.local-content strong {
+    color: var(--color-red);
+    font-weight: 600;
+}
+
+.local-content a {
+    color: var(--color-red);
+    font-weight: 600;
+    text-decoration: underline;
+}
+
+.local-content a:hover {
+    color: var(--color-bright-red);
+}
+
 /* Final CTA */
 .final-cta {
     background: linear-gradient(135deg, var(--color-dark), var(--color-black));
