@@ -163,7 +163,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // ============================================
     const contactForm = document.getElementById('contactForm');
     if (contactForm) {
-        contactForm.addEventListener('submit', function(e) {
+        contactForm.addEventListener('submit', async function(e) {
             e.preventDefault();
             
             // Get form data
@@ -174,17 +174,80 @@ document.addEventListener('DOMContentLoaded', function() {
             const program = formData.get('program');
             const message = formData.get('message');
 
-            // Create WhatsApp message
-            const whatsappMessage = `Hello! I'm interested in ${program || 'your programs'}.\n\nName: ${name}\nPhone: ${phone}${email ? `\nEmail: ${email}` : ''}${message ? `\nMessage: ${message}` : ''}`;
-            const encodedMessage = encodeURIComponent(whatsappMessage);
-            const whatsappFormUrl = `${whatsappUrl}?text=${encodedMessage}`;
+            // Prepare data for Firebase
+            const contactData = {
+                name: name,
+                phone: phone,
+                email: email || '',
+                program: program,
+                message: message || '',
+                timestamp: new Date().toISOString(),
+                source: 'website_contact_form'
+            };
 
-            // Open WhatsApp
-            window.open(whatsappFormUrl, '_blank');
+            // Show loading state
+            const submitButton = contactForm.querySelector('button[type="submit"]');
+            const originalButtonText = submitButton ? submitButton.textContent : '';
+            if (submitButton) {
+                submitButton.disabled = true;
+                submitButton.textContent = 'Submitting...';
+            }
 
-            // Show success message
-            alert('Opening WhatsApp to send your message!');
-            contactForm.reset();
+            try {
+                // Save to Firebase Firestore if available
+                if (window.firebaseDb) {
+                    try {
+                        const { collection, addDoc } = await import("https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js");
+                        await addDoc(collection(window.firebaseDb, 'contact_queries'), contactData);
+                        console.log('Contact form data saved to Firebase successfully');
+                    } catch (firebaseError) {
+                        console.warn('Firebase save failed, continuing with form submission:', firebaseError);
+                        // Continue with form submission even if Firebase fails
+                    }
+                }
+
+                // Show success message
+                const formSuccess = document.getElementById('formSuccess');
+                if (formSuccess) {
+                    formSuccess.style.display = 'block';
+                    contactForm.style.display = 'none';
+                } else {
+                    alert('Thank you! Your message has been submitted. We will contact you soon.');
+                }
+
+                // Track form submission in analytics
+                if (window.firebaseAnalytics && window.firebaseLogEvent) {
+                    try {
+                        window.firebaseLogEvent(window.firebaseAnalytics, 'form_submission', {
+                            form_name: 'contact_form',
+                            program: program
+                        });
+                    } catch (analyticsError) {
+                        console.warn('Analytics tracking failed:', analyticsError);
+                    }
+                }
+
+                // Reset form
+                contactForm.reset();
+
+            } catch (error) {
+                console.error('Error processing contact form:', error);
+                
+                // Fallback to WhatsApp if everything fails
+                const whatsappMessage = `Hello! I'm interested in ${program || 'your programs'}.\n\nName: ${name}\nPhone: ${phone}${email ? `\nEmail: ${email}` : ''}${message ? `\nMessage: ${message}` : ''}`;
+                const encodedMessage = encodeURIComponent(whatsappMessage);
+                const whatsappFormUrl = `${whatsappUrl}?text=${encodedMessage}`;
+                
+                window.open(whatsappFormUrl, '_blank');
+                alert('Opening WhatsApp to send your message!');
+                contactForm.reset();
+            } finally {
+                // Restore button state
+                if (submitButton) {
+                    submitButton.disabled = false;
+                    submitButton.textContent = originalButtonText;
+                }
+            }
         });
     }
 

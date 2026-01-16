@@ -26,6 +26,36 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Firebase SDK -->
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAnalytics, logEvent } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics.js";
+        import { getFirestore } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBP_tZFZKv0iL-0V6IhB4t40SD8Uf5gXzI",
+            authDomain: "warriorxmartial-arts.firebaseapp.com",
+            projectId: "warriorxmartial-arts",
+            storageBucket: "warriorxmartial-arts.firebasestorage.app",
+            messagingSenderId: "277195473669",
+            appId: "1:277195473669:web:4673f509b1de2be0dfad6c",
+            measurementId: "G-LCZL8VXG8N"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const db = getFirestore(app);
+
+        // Make Firebase available globally
+        window.firebaseApp = app;
+        window.firebaseDb = db;
+        window.firebaseAnalytics = analytics;
+        window.firebaseLogEvent = logEvent;
+    </script>
 </head>
 <body>
     <!-- Loading Screen -->
@@ -308,8 +338,8 @@
                     </div>
                     <p>Building warriors through discipline, respect, and excellence in martial arts training.</p>
                     <div class="social-links">
-                        <a href="#" aria-label="Facebook">FB</a>
-                        <a href="#" aria-label="Instagram">IG</a>
+                        <a href="https://www.facebook.com/warriorxmartialartskgp" target="_blank" rel="noopener noreferrer" aria-label="Facebook">FB</a>
+                        <a href="https://www.instagram.com/warriorxmartialarts/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">IG</a>
                         <a href="#" aria-label="YouTube">YT</a>
                     </div>
                 </div>
