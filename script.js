@@ -3,6 +3,23 @@
 // Main JavaScript File
 // ============================================
 
+// ============================================
+// Loading Screen
+// ============================================
+window.addEventListener('load', function() {
+    const loadingScreen = document.getElementById('loadingScreen');
+    if (loadingScreen) {
+        // Add a small delay for smooth transition
+        setTimeout(function() {
+            loadingScreen.classList.add('hidden');
+            // Remove from DOM after animation completes
+            setTimeout(function() {
+                loadingScreen.style.display = 'none';
+            }, 500);
+        }, 300);
+    }
+});
+
 document.addEventListener('DOMContentLoaded', function() {
     // ============================================
     // Sticky Navbar
@@ -190,6 +207,31 @@ document.addEventListener('DOMContentLoaded', function() {
 
         document.querySelectorAll('img[data-src]').forEach(img => {
             imageObserver.observe(img);
+        });
+    }
+
+    // ============================================
+    // Scroll to Top Button
+    // ============================================
+    const scrollToTopBtn = document.getElementById('scrollToTop');
+    
+    if (scrollToTopBtn) {
+        // Show/hide button based on scroll position
+        window.addEventListener('scroll', function() {
+            if (window.pageYOffset > 300) {
+                scrollToTopBtn.classList.add('visible');
+            } else {
+                scrollToTopBtn.classList.remove('visible');
+            }
+        });
+
+        // Scroll to top when button is clicked
+        scrollToTopBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
         });
     }
 

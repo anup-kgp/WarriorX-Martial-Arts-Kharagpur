@@ -52,6 +52,110 @@ body {
     color: var(--color-white);
     background-color: var(--color-black);
     overflow-x: hidden;
+    position: relative;
+}
+
+/* Logo Watermark - Fixed Background */
+body::before {
+    content: '';
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    height: 600px;
+    max-width: 80vw;
+    max-height: 80vh;
+    background-image: url('logo.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.07;
+    z-index: -1;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+/* Loading Screen */
+.loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-black);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 99999;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+.loading-screen.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.loading-logo {
+    width: 200px;
+    height: 200px;
+    max-width: 40vw;
+    max-height: 40vw;
+    background-image: url('logo.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    animation: logoPulse 2s ease-in-out infinite;
+    margin-bottom: var(--spacing-lg);
+}
+
+.loading-text {
+    color: var(--color-white);
+    font-family: var(--font-heading);
+    font-size: clamp(1.2rem, 3vw, 1.8rem);
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin-bottom: var(--spacing-md);
+    animation: fadeInOut 2s ease-in-out infinite;
+}
+
+.loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 4px solid rgba(220, 20, 60, 0.2);
+    border-top-color: var(--color-red);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes logoPulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.05);
+        opacity: 0.9;
+    }
+}
+
+@keyframes fadeInOut {
+    0%, 100% {
+        opacity: 0.6;
+    }
+    50% {
+        opacity: 1;
+    }
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 /* Typography */
@@ -1531,6 +1635,46 @@ a:hover {
     height: 30px;
 }
 
+/* Scroll to Top Button */
+.scroll-to-top {
+    position: fixed;
+    bottom: 30px;
+    left: 30px;
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, var(--color-red), var(--color-bright-red));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 20px rgba(220, 20, 60, 0.5);
+    z-index: 998;
+    transition: all var(--transition-normal);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    cursor: pointer;
+    border: none;
+    color: var(--color-white);
+}
+
+.scroll-to-top.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.scroll-to-top:hover {
+    transform: translateY(-5px) scale(1.1);
+    box-shadow: 0 6px 30px rgba(220, 20, 60, 0.7);
+}
+
+.scroll-to-top svg {
+    width: 24px;
+    height: 24px;
+    fill: var(--color-white);
+}
+
 /* Animations */
 @keyframes fadeInUp {
     from {
@@ -2058,6 +2202,18 @@ MOBILE NAVBAR - FRESH START
     .whatsapp-float svg {
         width: 24px;
         height: 24px;
+    }
+
+    .scroll-to-top {
+        bottom: 20px;
+        left: 20px;
+        width: 45px;
+        height: 45px;
+    }
+
+    .scroll-to-top svg {
+        width: 20px;
+        height: 20px;
     }
 }
 
