@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://warriorxmartialarts.in/sitemap.xml
