@@ -299,6 +299,30 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // ============================================
+    // Fixed Blog Sidebar Toggle
+    // ============================================
+    const sidebarToggle = document.getElementById('sidebarToggle');
+    const fixedBlogSidebar = document.getElementById('fixedBlogSidebar');
+    
+    if (sidebarToggle && fixedBlogSidebar) {
+        sidebarToggle.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            fixedBlogSidebar.classList.toggle('active');
+        });
+
+        // Close sidebar when clicking outside
+        document.addEventListener('click', function(event) {
+            if (fixedBlogSidebar.classList.contains('active')) {
+                const isClickInsideSidebar = fixedBlogSidebar.contains(event.target);
+                if (!isClickInsideSidebar) {
+                    fixedBlogSidebar.classList.remove('active');
+                }
+            }
+        });
+    }
+
+    // ============================================
     // Console Message
     // ============================================
     console.log('%cWarriorX Martial Arts - Kharagpur', 'color: #DC143C; font-size: 20px; font-weight: bold;');
